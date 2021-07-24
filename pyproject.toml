@@ -9,6 +9,10 @@ python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+autopep8 = "^1.5.7"
+flake8 = "^3.9.2"
+pycodestyle = "^2.7.0"
+toml = "^0.10.2"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
