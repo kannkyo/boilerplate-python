@@ -1,3 +1,3 @@
 # boilerplate-python
 
-Pythonプロジェクト用のボイラープレート
+Python プロジェクト用のボイラープレート
