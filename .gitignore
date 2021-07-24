@@ -175,3 +175,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+## Add
+/junit/
