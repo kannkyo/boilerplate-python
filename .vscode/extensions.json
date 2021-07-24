@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    // python
+    "ms-python.python",
+    "njpwerner.autodocstring",
+    // flask
+    "cstrap.flask-snippets"
+  ],
+  "unwantedRecommendations": []
+}
