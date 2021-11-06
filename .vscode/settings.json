@@ -7,5 +7,10 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": true
-  }
+  },
+  "cSpell.words": ["distutils", "pypi", "pypirc", "setuptools"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["--no-cov"]
 }
