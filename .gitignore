@@ -176,5 +176,17 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-## Add
+## for junit report
 /junit/
+
+# for pandoc
+*.pdf
+
+# for sphinx
+docs/api/
+
+.idea/
+
+report.xml
+
+public/
