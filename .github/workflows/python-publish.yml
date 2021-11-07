@@ -75,6 +75,8 @@ jobs:
         run: |
           poetry run sphinx-apidoc -f -o docs/api src/
           poetry run sphinx-build -M html docs/ public/
+          # FIXME: add .nojekyll to upload _static ( see https://qiita.com/key-amb/items/4f799fed51734987f3c5 )
+          touch public/.nojekyll
       - name: deploy document to gh-pages
         uses: crazy-max/ghaction-github-pages@v2
         env:
