@@ -41,4 +41,4 @@ def test_main(capfd):
 
     out, err = capfd.readouterr()
     assert out == "The {}-th Fibonacci number is {}\n".format(7, 13)
-    assert err is ""
+    assert err == ""
