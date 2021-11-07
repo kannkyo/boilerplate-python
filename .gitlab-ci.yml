@@ -51,13 +51,17 @@ flake8:
 
 run:
   stage: publish
+  variables:
+    REGISTORY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
   before_script:
     - pip install --upgrade pip
     - pip install poetry
     - poetry install
   script:
     - poetry build
-    - poetry publish -r nexus
+    - echo "publish to ${REGISTORY_URL}"
+    - poetry config repositories.gitlab ${REGISTORY_URL}
+    - poetry publish -p ${CI_JOB_TOKEN} -u ${CI_REGISTRY_USER} -r gitlab
   artifacts:
     paths:
       - dist/*.whl
