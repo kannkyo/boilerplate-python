@@ -23,9 +23,11 @@ COPY --from=builder /usr/src/app/requirements.txt .
 
 # dns for nexus
 # https://stackoverflow.com/questions/44184661/set-dns-options-during-docker-build/48326305
-COPY . .
-RUN /bin/bash scripts/dns.sh \
-    && python -m pip install -r requirements.txt
+# COPY . .
+# RUN /bin/bash scripts/dns.sh \
+#     && python -m pip install -r requirements.txt
+
+RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 ADD . /app
