@@ -41,7 +41,8 @@ flake8:
     - poetry install
   script:
     - mkdir -p public/flake8
-    - poetry run flake8 src/ --format junit-xml --output-file report.xml --format html --htmldir=public/flake8
+    - poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
+    - poetry run flake8 src/ tests/ --format html --htmldir=public/flake8
   artifacts:
     when: always
     reports:
