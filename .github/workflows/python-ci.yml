@@ -1,0 +1,63 @@
+name: python ci
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.1.11]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: snok/install-poetry@v1
+        with:
+          version: ${{ inputs.poetry-version }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      - uses: actions/cache@v2
+        id: poetry_cache_id
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+      - name: install dependencies
+        if: steps.poetry_cache_id.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          poetry install
+      - name: lint with flake8
+        continue-on-error: true
+        run: |
+          poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
+          poetry run flake8 src/ tests/ --format html --htmldir=flake8
+      - name: upload flake8 report
+        uses: mikepenz/action-junit-report@v2.7.0
+        with:
+          check_name: flake8 report
+          report_paths: report.xml
+      - name: upload flake8 report
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: flake8-report
+          path: flake8/
+      - name: test with pytest
+        continue-on-error: true
+        run: |
+          poetry run pytest
+      - name: upload pytest report
+        uses: mikepenz/action-junit-report@v2.7.0
+        with:
+          check_name: pytest report
+          report_paths: report.xml
+      - name: upload pytest report
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: pytest-report
+          path: htmlcov/
+
