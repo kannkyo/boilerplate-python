@@ -33,14 +33,29 @@ jobs:
           poetry install
       - name: lint with flake8
         run: |
-          # stop the build if there are Python syntax errors or undefined names
-          poetry run flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          poetry run flake8 src/ tests/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
+          poetry run flake8 src/ tests/ --format html --htmldir=flake8
+      - name: upload flake8 report
+        uses: mikepenz/action-junit-report@v2.7.0
+        with:
+          check_name: flake8 report
+          report_paths: report.xml
+      - name: upload flake8 report
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: flake8-report
+          path: flake8/
       - name: test with pytest
         run: |
           poetry run pytest
       - name: upload pytest report
         uses: mikepenz/action-junit-report@v2.7.0
         with:
+          check_name: pytest report
           report_paths: report.xml
+      - name: upload pytest report
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: pytest-report
+          path: htmlcov/
+
