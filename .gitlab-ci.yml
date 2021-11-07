@@ -1,0 +1,98 @@
+image: python:3.9
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
+stages:
+  - test
+  - docs
+  - publish
+  - deploy
+
+cache:
+  paths:
+    - ".cache/pip"
+    - venv/
+
+pytest:
+  stage: test
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      cobertura: coverage.xml
+    paths:
+      - public
+
+flake8:
+  stage: test
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - mkdir -p public/flake8
+    - poetry run flake8 src/ --format junit-xml --output-file report.xml --format html --htmldir=public/flake8
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+    paths:
+      - public
+
+run:
+  stage: publish
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry build
+    - poetry publish -r nexus
+  artifacts:
+    paths:
+      - dist/*.whl
+      - dist/*.tar.gz
+
+dockerize:
+  stage: publish
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
+    - docker push "$CI_REGISTRY_IMAGE${tag}"
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - Dockerfile
+
+pages:
+  stage: deploy
+  script:
+    - echo 'Upload all report'
+  artifacts:
+    paths:
+      - public
+
+sast:
+  stage: test
