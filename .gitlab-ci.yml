@@ -49,8 +49,10 @@ flake8:
     paths:
       - public
 
-run:
+publish:
   stage: publish
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   variables:
     REGISTRY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
   before_script:
@@ -70,6 +72,8 @@ run:
 dockerize:
   stage: publish
   image: docker:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   services:
     - docker:dind
   before_script:
@@ -91,8 +95,10 @@ dockerize:
         - Dockerfile
 
 sphinx:
-  image: monster:5003/sphinxdoc/sphinx-latexpdf:latest
   stage: docs
+  image: monster:5003/sphinxdoc/sphinx-latexpdf:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   before_script:
     - pip install --upgrade pip
     - pip install poetry
@@ -107,6 +113,8 @@ sphinx:
 
 pages:
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - echo 'Upload all report'
   artifacts:
