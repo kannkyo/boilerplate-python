@@ -8,7 +8,13 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true
   },
-  "cSpell.words": ["distutils", "pypi", "pypirc", "setuptools"],
+  "cSpell.words": [
+    "distutils",
+    "pypi",
+    "pypirc",
+    "pytest",
+    "setuptools"
+  ],
   "python.testing.unittestEnabled": false,
   "python.testing.nosetestsEnabled": false,
   "python.testing.pytestEnabled": true,
