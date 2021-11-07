@@ -43,3 +43,43 @@ jobs:
         with:
           name: package
           path: dist/
+
+  pages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.1.11]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: snok/install-poetry@v1
+        with:
+          version: ${{ inputs.poetry-version }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      - uses: actions/cache@v2
+        id: poetry_cache_id
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+      - name: install dependencies
+        if: steps.poetry_cache_id.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          poetry install
+      - name: generate sphinx
+        run: |
+          poetry run sphinx-apidoc -f -o docs/api src/
+          poetry run sphinx-build -M html docs/ public/
+          poetry run sphinx-build -M latexpdf docs/ public/
+      - name: deploy document to gh-pages
+        uses: crazy-max/ghaction-github-pages@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target_branch: gh-pages
+          build_dir: public/
