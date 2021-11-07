@@ -33,3 +33,7 @@ jobs:
       - name: Test with pytest
         run: |
           poetry run pytest
+      - name: upload pytest report
+        uses: mikepenz/action-junit-report@v2.7.0
+        with:
+          report_paths: report.xml
