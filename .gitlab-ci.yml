@@ -92,7 +92,7 @@ dockerize:
 
 sphinx:
   stage: docs
-  image: monster:5003/sphinxdoc/sphinx-latexpdf:latest
+  image: sphinxdoc/sphinx-latexpdf:latest
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   before_script:
