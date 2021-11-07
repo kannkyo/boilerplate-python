@@ -1,0 +1,121 @@
+image: python:3.9
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
+stages:
+  - test
+  - docs
+  - publish
+  - deploy
+
+cache:
+  paths:
+    - ".cache/pip"
+    - .venv/
+
+pytest:
+  stage: test
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+      cobertura: coverage.xml
+    paths:
+      - public
+
+flake8:
+  stage: test
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - mkdir -p public/flake8
+    - poetry run flake8 src/ --format junit-xml --output-file report.xml --format html --htmldir=public/flake8
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+    paths:
+      - public
+
+publish:
+  stage: publish
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  variables:
+    REGISTRY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry build
+    - echo "publish to ${REGISTRY_URL}"
+    - poetry config repositories.gitlab ${REGISTRY_URL}
+    - poetry publish -p ${CI_JOB_TOKEN} -u ${CI_REGISTRY_USER} -r gitlab
+  artifacts:
+    paths:
+      - dist/*.whl
+      - dist/*.tar.gz
+
+dockerize:
+  stage: publish
+  image: docker:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
+    - docker push "$CI_REGISTRY_IMAGE${tag}"
+
+sphinx:
+  stage: docs
+  image: monster:5003/sphinxdoc/sphinx-latexpdf:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  before_script:
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run sphinx-apidoc -f -o docs/api src/
+    - poetry run sphinx-build -M html docs/ public/
+    - poetry run sphinx-build -M latexpdf docs/ public/
+  artifacts:
+    paths:
+      - public
+
+pages:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - echo 'Upload all report'
+  artifacts:
+    paths:
+      - public
+
+sast:
+  stage: test
