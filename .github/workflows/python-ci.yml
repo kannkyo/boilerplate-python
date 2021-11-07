@@ -32,6 +32,7 @@ jobs:
         run: |
           poetry install
       - name: lint with flake8
+        continue-on-error: true
         run: |
           poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
           poetry run flake8 src/ tests/ --format html --htmldir=flake8
@@ -46,6 +47,7 @@ jobs:
           name: flake8-report
           path: flake8/
       - name: test with pytest
+        continue-on-error: true
         run: |
           poetry run pytest
       - name: upload pytest report
