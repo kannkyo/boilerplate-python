@@ -36,6 +36,10 @@ jobs:
         run: |
           poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
           poetry run flake8 src/ tests/ --format html --htmldir=flake8
+      - name: publish flake8 results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          files: report.xml
       - name: upload flake8 report
         uses: mikepenz/action-junit-report@v2.7.0
         with:
@@ -50,6 +54,10 @@ jobs:
         continue-on-error: true
         run: |
           poetry run pytest
+      - name: publish pytest results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          files: report.xml
       - name: upload pytest report
         uses: mikepenz/action-junit-report@v2.7.0
         with:
