@@ -39,12 +39,8 @@ jobs:
       - name: publish flake8 results
         uses: EnricoMi/publish-unit-test-result-action@v1
         with:
+          check_name: flake8 results
           files: report.xml
-      - name: upload flake8 report
-        uses: mikepenz/action-junit-report@v2.7.0
-        with:
-          check_name: flake8 report
-          report_paths: report.xml
       - name: upload flake8 report
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -57,12 +53,8 @@ jobs:
       - name: publish pytest results
         uses: EnricoMi/publish-unit-test-result-action@v1
         with:
+          check_name: pytest results
           files: report.xml
-      - name: upload pytest report
-        uses: mikepenz/action-junit-report@v2.7.0
-        with:
-          check_name: pytest report
-          report_paths: report.xml
       - name: upload pytest report
         uses: actions/upload-artifact@v2.2.4
         with:
