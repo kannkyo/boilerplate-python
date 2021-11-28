@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster as builder
+FROM python:3.11.0a1-slim-bullseye as builder
 
 WORKDIR /usr/src/app
 
@@ -7,7 +7,7 @@ RUN python -m pip install poetry \
     && poetry export -f requirements.txt --without-hashes --with-credentials > requirements.txt
 
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.9-slim-buster
+FROM python:3.11.0a1-slim-bullseye
 
 EXPOSE 5000
 
