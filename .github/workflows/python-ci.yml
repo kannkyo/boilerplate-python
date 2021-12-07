@@ -2,6 +2,7 @@ name: python ci
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   build:
