@@ -1,4 +1,4 @@
-FROM python:3.11.0a3-slim-bullseye as builder
+FROM python:3.11.0a6-slim-bullseye as builder
 
 WORKDIR /usr/src/app
 
@@ -7,7 +7,7 @@ RUN python -m pip install poetry \
     && poetry export -f requirements.txt --without-hashes --with-credentials > requirements.txt
 
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.11.0a3-slim-bullseye
+FROM python:3.11.0a6-slim-bullseye
 
 EXPOSE 5000
 
