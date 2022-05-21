@@ -3,6 +3,11 @@ name: python ci
 on:
   push:
   workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * 0"
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
@@ -62,3 +67,85 @@ jobs:
           name: pytest-report
           path: htmlcov/
 
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build
+        run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:trivy
+
+      - name: scan by trivy
+        uses: aquasecurity/trivy-action@0.2.0
+        with:
+          image-ref: "${{ env.IMAGE_NAME }}:trivy"
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL,HIGH"
+
+      - name: upload trivy scan results to gitHub security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: "trivy-results.sarif"
+
+  anchore-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build
+        run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:anchore-image
+
+      - name: scan image by anchore
+        id: anchore-image
+        uses: anchore/scan-action@v3
+        with:
+          image: "${{ env.IMAGE_NAME }}:anchore-image"
+          severity-cutoff: low
+          fail-build: false
+          acs-report-enable: true
+
+      - name: upload anchore scan results to gitHub security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.anchore-image.outputs.sarif }}
+
+  anchore-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: scan files by anchore
+        id: anchore-files
+        uses: anchore/scan-action@v3
+        with:
+          path: "."
+          severity-cutoff: low
+          fail-build: false
+          acs-report-enable: true
+
+      - name: upload anchore scan results to gitHub security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.anchore-files.outputs.sarif }}
+
+  hadolint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: scan Dockerfile by hadolint
+        uses: hadolint/hadolint-action@master
+        with:
+          recursive: true
+          format: sarif
+          output-file: hadolint-results.sarif
+          no-fail: true
+
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: hadolint-results.sarif
+          wait-for-processing: true
