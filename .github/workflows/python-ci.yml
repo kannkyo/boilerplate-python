@@ -85,6 +85,7 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:alpha
           context: .
           outputs: type=docker,dest=/tmp/myimage.tar
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
 
       - name: upload artifact
         uses: actions/upload-artifact@v3
