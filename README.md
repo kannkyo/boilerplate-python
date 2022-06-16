@@ -6,6 +6,16 @@ Python プロジェクト用のボイラープレート
 [![publish](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-publish.yml)
 [![CodeQL](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml)
 
+## sigstore の構成
+
+```bash
+git config --local commit.gpgsign true
+git config --local gpg.x509.program gitsign
+git config --local gpg.format x509
+```
+
+## temp
+
 ```bash
 in-toto-mock --name vcs-1 -- git clone <repo>
 in-toto-mock --name building-1 -- poetry build
