@@ -146,27 +146,30 @@ test = ["pytest (>=6.2.0)", "pytest-cov", "pytest-subtests", "pytest-xdist", "pr
 
 [[package]]
 name = "cyclonedx-bom"
-version = "1.4.1"
+version = "3.4.0"
 description = "CycloneDX Software Bill of Materials (SBOM) generation utility"
 category = "dev"
 optional = false
 python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
-cyclonedx-python-lib = ">=0.10.2,<0.11.0"
+cyclonedx-python-lib = ">=2.0.0,<3.0.0"
+packageurl-python = ">=0.9"
+pip-requirements-parser = ">=31.2.0,<32.0.0"
+toml = ">=0.10.0,<0.11.0"
 
 [[package]]
 name = "cyclonedx-python-lib"
-version = "0.10.2"
+version = "2.5.2"
 description = "A library for producing CycloneDX SBOM (Software Bill of Materials) files."
 category = "dev"
 optional = false
 python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
-packageurl-python = ">=0.9.4,<0.10.0"
-requirements_parser = ">=0.2.0,<0.3.0"
-toml = ">=0.10.2,<0.11.0"
+packageurl-python = ">=0.9"
+sortedcontainers = ">=2.4.0,<3.0.0"
+toml = ">=0.10.0,<0.11.0"
 
 [[package]]
 name = "docutils"
@@ -390,6 +393,21 @@ optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
+name = "pip-requirements-parser"
+version = "31.2.0"
+description = "pip requirements parser - a mostly correct pip requirements parsing library because it uses pip's own code."
+category = "dev"
+optional = false
+python-versions = ">=3.6.*"
+
+[package.dependencies]
+packaging = "*"
+
+[package.extras]
+docs = ["Sphinx (>=3.3.1)", "sphinx-rtd-theme (>=0.5.0)", "doc8 (>=0.8.1)"]
+testing = ["pytest (>=6)", "pytest-xdist (>=2)"]
+
+[[package]]
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
@@ -559,14 +577,6 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<5)"]
 
 [[package]]
-name = "requirements-parser"
-version = "0.2.0"
-description = "Parses Pip requirement files"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "securesystemslib"
 version = "0.23.0"
 description = "A library that provides cryptographic and general-purpose routines for Secure Systems Lab projects at NYU"
@@ -594,6 +604,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "snowballstemmer"
 version = "2.1.0"
 description = "This package provides 29 stemmers for 28 languages generated from Snowball algorithms."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "sortedcontainers"
+version = "2.4.0"
+description = "Sorted Containers -- Sorted List, Sorted Dict, Sorted Set"
 category = "dev"
 optional = false
 python-versions = "*"
@@ -782,7 +800,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "afc2df974929ad757a55e10315128923d7a8ca12ae04cce573f16ab4dabd5355"
+content-hash = "020359ff9e180c99c93570889de649f2be71c65696250fa70ed049e8d42ee0e1"
 
 [metadata.files]
 alabaster = [
@@ -943,12 +961,12 @@ cryptography = [
     {file = "cryptography-35.0.0.tar.gz", hash = "sha256:9933f28f70d0517686bd7de36166dda42094eac49415459d9bdf5e7df3e0086d"},
 ]
 cyclonedx-bom = [
-    {file = "cyclonedx-bom-1.4.1.tar.gz", hash = "sha256:dd61e6dabeca2f469fc457b3ecfbabd7945e15ae91487f442a1454182de2219e"},
-    {file = "cyclonedx_bom-1.4.1-py3-none-any.whl", hash = "sha256:286f4c835540ebc46574e684113f5d6bb528baaf86ac83eeb86e1ee3c0c36fce"},
+    {file = "cyclonedx-bom-3.4.0.tar.gz", hash = "sha256:588265fa7b44b98c736a4bc48d6ecf9d4b94de3476cf7f1dfff744d6876538ee"},
+    {file = "cyclonedx_bom-3.4.0-py3-none-any.whl", hash = "sha256:8038b13f12b121fb86d40034210ef184d9e50d4fbd82f556df4161b5c7249a51"},
 ]
 cyclonedx-python-lib = [
-    {file = "cyclonedx-python-lib-0.10.2.tar.gz", hash = "sha256:6f79742ca1728b9016ea272bbe58a60441848e6b4f9742918b8eb67ca987df3b"},
-    {file = "cyclonedx_python_lib-0.10.2-py3-none-any.whl", hash = "sha256:e0b2cd3e91c3d55746ce7175a05c23ea2f618158a407b7c9d166eef083a4ee04"},
+    {file = "cyclonedx-python-lib-2.5.2.tar.gz", hash = "sha256:875c0dac4c8be1da58cef399eb09ceba8668a153d2bfed67b7af8bdbca5bad61"},
+    {file = "cyclonedx_python_lib-2.5.2-py3-none-any.whl", hash = "sha256:7a3aebcc1603e2cb0bc13ebf4274d2bd28ee46d199a7c2c05bd9d823ea7143e4"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
@@ -1096,6 +1114,10 @@ pathspec = [
     {file = "pathspec-0.9.0-py2.py3-none-any.whl", hash = "sha256:7d15c4ddb0b5c802d161efc417ec1a2558ea2653c2e8ad9c19098201dc1c993a"},
     {file = "pathspec-0.9.0.tar.gz", hash = "sha256:e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"},
 ]
+pip-requirements-parser = [
+    {file = "pip-requirements-parser-31.2.0.tar.gz", hash = "sha256:8c2a6f8e091ac2693824a5ef4e3b250226e34f74a20a91a87b9ab0714b47788f"},
+    {file = "pip_requirements_parser-31.2.0-py3-none-any.whl", hash = "sha256:22fa213a987913385b2484d5698ecfa1d9cf4154978cdf929085548af55355b0"},
+]
 pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
@@ -1156,10 +1178,6 @@ requests = [
     {file = "requests-2.26.0-py2.py3-none-any.whl", hash = "sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24"},
     {file = "requests-2.26.0.tar.gz", hash = "sha256:b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b01b07a7"},
 ]
-requirements-parser = [
-    {file = "requirements-parser-0.2.0.tar.gz", hash = "sha256:5963ee895c2d05ae9f58d3fc641082fb38021618979d6a152b6b1398bd7d4ed4"},
-    {file = "requirements_parser-0.2.0-py2-none-any.whl", hash = "sha256:76650b4a9d98fc65edf008a7920c076bb2a76c08eaae230ce4cfc6f51ea6a773"},
-]
 securesystemslib = [
     {file = "securesystemslib-0.23.0-py3-none-any.whl", hash = "sha256:613c2891a8b4480bae6edb2351710f8c695679101ea7f471cc56f64980d2cd38"},
     {file = "securesystemslib-0.23.0.tar.gz", hash = "sha256:573e9c810f2a6afe9ac71a177f26b9d6a321c53574f561f5cef2ed511c3f1831"},
@@ -1171,6 +1189,10 @@ six = [
 snowballstemmer = [
     {file = "snowballstemmer-2.1.0-py2.py3-none-any.whl", hash = "sha256:b51b447bea85f9968c13b650126a888aabd4cb4463fca868ec596826325dedc2"},
     {file = "snowballstemmer-2.1.0.tar.gz", hash = "sha256:e997baa4f2e9139951b6f4c631bad912dfd3c792467e2f03d7239464af90e914"},
+]
+sortedcontainers = [
+    {file = "sortedcontainers-2.4.0-py2.py3-none-any.whl", hash = "sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0"},
+    {file = "sortedcontainers-2.4.0.tar.gz", hash = "sha256:25caa5a06cc30b6b83d11423433f65d1f9d76c4c6a0c90e3379eaa43b9bfdb88"},
 ]
 sphinx = [
     {file = "Sphinx-5.0.2-py3-none-any.whl", hash = "sha256:d3e57663eed1d7c5c50895d191fdeda0b54ded6f44d5621b50709466c338d1e8"},
