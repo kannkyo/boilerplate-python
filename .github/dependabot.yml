@@ -6,3 +6,9 @@ updates:
       interval: "daily"
     assignees:
       - "kannkyo"
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "kannkyo"
