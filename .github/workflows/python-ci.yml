@@ -1,8 +1,8 @@
 name: python ci
 
 on:
-  push:
   workflow_dispatch:
+  pull_request:
   schedule:
     - cron: "0 15 * * 0"
 
