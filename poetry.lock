@@ -270,11 +270,11 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [[package]]
 name = "in-toto"
-version = "1.1.1"
+version = "1.2.0"
 description = "A framework to define and secure the integrity of software supply chains"
 category = "dev"
 optional = false
-python-versions = "~=3.6"
+python-versions = "~=3.7"
 
 [package.dependencies]
 attrs = "*"
@@ -800,7 +800,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "020359ff9e180c99c93570889de649f2be71c65696250fa70ed049e8d42ee0e1"
+content-hash = "006713cfc51a6f73256514776066c59408967db2ba79a0ac0ffbb20f6f06d4d5"
 
 [metadata.files]
 alabaster = [
@@ -1001,8 +1001,8 @@ importlib-metadata = [
     {file = "importlib_metadata-4.8.1.tar.gz", hash = "sha256:f284b3e11256ad1e5d03ab86bb2ccd6f5339688ff17a4d797a0fe7df326f23b1"},
 ]
 in-toto = [
-    {file = "in-toto-1.1.1.tar.gz", hash = "sha256:29ec534fd63fcc87c7f3b5120020bfcaf0651f6f629f8ed71912788e900bc720"},
-    {file = "in_toto-1.1.1-py3-none-any.whl", hash = "sha256:4650c9031699da5cf56f38f086172d553f9c12208ee19fa1a289c5f4d9dc179e"},
+    {file = "in-toto-1.2.0.tar.gz", hash = "sha256:54ee1a542c41cb02e68ec51212e8bed8a7c6a2b0e4cfd32d6ae17085b7484a26"},
+    {file = "in_toto-1.2.0-py3-none-any.whl", hash = "sha256:a931b81868cc9b2a8bfdace43e66dd95fd007217202a34ea72c1538f9407100a"},
 ]
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
