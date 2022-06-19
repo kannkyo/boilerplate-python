@@ -190,3 +190,5 @@ docs/api/
 report.xml
 
 public/
+
+sbom.xml

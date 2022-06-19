@@ -17,7 +17,9 @@
         "FLASK_ENV": "development",
         "FLASK_DEBUG": "0"
       },
-      "args": ["run"],
+      "args": [
+        "run"
+      ],
       "jinja": true
     },
     {

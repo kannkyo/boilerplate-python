@@ -3,7 +3,7 @@ name: python ci
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
   schedule:
     - cron: "0 15 * * 0"
@@ -42,8 +42,7 @@ jobs:
       - name: install dependencies
         if: steps.poetry_cache_id.outputs.cache-hit != 'true'
         shell: bash
-        run: |
-          poetry install
+        run: poetry install
       - name: lint with flake8
         continue-on-error: true
         run: |

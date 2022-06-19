@@ -4,13 +4,25 @@
     {
       "type": "shell",
       "label": "venv: init",
-      "command": ["python3", "-m", "venv", "venv"]
+      "command": [
+        "python3",
+        "-m",
+        "venv",
+        "venv"
+      ]
     },
     {
       "type": "shell",
       "label": "venv: install",
       "command": "${config:python.pythonPath}",
-      "args": ["-m", "pip", "install", "-U", "poetry", "pip"]
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-U",
+        "poetry",
+        "pip"
+      ]
     },
     {
       "type": "docker-build",
@@ -26,7 +38,9 @@
     {
       "type": "docker-run",
       "label": "docker: debug",
-      "dependsOn": ["docker: build"],
+      "dependsOn": [
+        "docker: build"
+      ],
       "dockerRun": {
         "env": {
           "FLASK_APP": "app.py"
@@ -53,7 +67,9 @@
           "detached": true,
           "build": true
         },
-        "files": ["${workspaceFolder}/docker-compose.yml"]
+        "files": [
+          "${workspaceFolder}/docker-compose.yml"
+        ]
       }
     },
     {
@@ -64,7 +80,9 @@
           "detached": true,
           "build": true
         },
-        "files": ["${workspaceFolder}/docker-compose.debug.yml"]
+        "files": [
+          "${workspaceFolder}/docker-compose.debug.yml"
+        ]
       }
     },
     {

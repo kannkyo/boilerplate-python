@@ -1,5 +1,4 @@
 {
-  "python.pythonPath": ".venv/bin/python",
   "python.formatting.provider": "autopep8",
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
@@ -8,15 +7,10 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true
   },
-  "cSpell.words": [
-    "distutils",
-    "pypi",
-    "pypirc",
-    "pytest",
-    "setuptools"
-  ],
   "python.testing.unittestEnabled": false,
-  "python.testing.nosetestsEnabled": false,
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": ["--no-cov"]
+  "python.testing.pytestArgs": [
+    "--no-cov"
+  ],
+  "explorer.excludeGitIgnore": true
 }
