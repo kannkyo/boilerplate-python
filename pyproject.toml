@@ -6,24 +6,24 @@ name = "boilerplate-python"
 version = "0.1.5"
 
 [tool.poetry.dependencies]
-Flask = "^2.0.1"
+Flask = "^2.1.2"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.6.0"
-cyclonedx-bom = "^1.0.2"
+cyclonedx-bom = "^3.4.0"
 flake8 = "^4.0.1"
 flake8-formatter-junit-xml = "^0.0.6"
-flake8-html = "^0.4.1"
-in-toto = "^1.1.1"
+flake8-html = "^0.4.2"
+in-toto = "^1.2.0"
 pycodestyle = "^2.7.0"
-pytest = "^6.2.5"
+pytest = "^7.1.2"
 pytest-cov = "^3.0.0"
 pytest-html = "^3.1.1"
 recommonmark = "^0.7.1"
-sphinx = "^3.4.1"
+sphinx = "^5.0.2"
 sphinx-markdown-tables = "^0.0.15"
-sphinx-rtd-theme = "^0.5.0"
+sphinx-rtd-theme = "^1.0.0"
 toml = "^0.10.2"
 
 [build-system]

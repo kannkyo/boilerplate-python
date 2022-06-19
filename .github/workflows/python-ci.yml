@@ -1,8 +1,10 @@
 name: python ci
 
 on:
-  push:
   workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
   schedule:
     - cron: "0 15 * * 0"
 
@@ -12,6 +14,11 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: # for EnricoMi/publish-unit-test-result-action
+      checks: write
+      pull-requests: write # for comment_mode
+      contents: read # only for private repository
+      issues: read # only for private repository
     strategy:
       matrix:
         python-version: [3.8]
