@@ -103,11 +103,12 @@ jobs:
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
           format: spdx-json
+          artifact-name: sbom.spdx.json
 
       - uses: anchore/sbom-action/publish-sbom@bb716408e75840bbb01e839347cd213767269d4a # v0.11.0
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          sbom-artifact-match: ".*\\.spdx$"
+          sbom-artifact-match: ".*\\.spdx\\.json$"
 
   pages:
     runs-on: ubuntu-latest
