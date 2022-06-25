@@ -25,16 +25,16 @@ jobs:
         poetry-version: [1.1.11]
     steps:
       - uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # v3.0.0
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@d09bd5e6005b175076f227b13d9730d56e9dcfcb # v4.0.0
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: snok/install-poetry@v1
+      - uses: snok/install-poetry@2bf112a0f6979928eb6b011f39700db589c5961e # v1.3.1
         with:
           version: ${{ inputs.poetry-version }}
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
-      - uses: actions/cache@v2
+      - uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d # v3.0.4
         id: poetry_cache_id
         with:
           path: .venv
@@ -49,7 +49,7 @@ jobs:
           poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
           poetry run flake8 src/ tests/ --format html --htmldir=flake8
       - name: publish flake8 results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@f00bb47e1d89c6d98071d1b69e16a2b63c7fbfc1 # v1.39
         with:
           check_name: flake8 results
           files: report.xml
@@ -63,7 +63,7 @@ jobs:
         run: |
           poetry run pytest
       - name: publish pytest results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@f00bb47e1d89c6d98071d1b69e16a2b63c7fbfc1 # v1.39
         with:
           check_name: pytest results
           files: report.xml
@@ -79,14 +79,14 @@ jobs:
       - uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # v3.0.0
 
       - name: set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # v2.0.0
 
       - name: set up docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # v2.0.0
 
       - name: build container
         id: build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8 # v3.0.0
         with:
           tags: ${{ env.IMAGE_NAME }}:alpha
           context: .
@@ -104,10 +104,10 @@ jobs:
     needs: dockerize
     steps:
       - name: set up docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # v2.0.0
 
       - name: download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # v3.0.0
         with:
           name: myimage
           path: /tmp
@@ -116,7 +116,7 @@ jobs:
         run: docker load --input /tmp/myimage.tar
 
       - name: scan by trivy
-        uses: aquasecurity/trivy-action@0.2.0
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe # v0.5.0
         with:
           image-ref: "${{ env.IMAGE_NAME }}:alpha"
           format: "template"
@@ -134,10 +134,10 @@ jobs:
     needs: dockerize
     steps:
       - name: set up docker buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # v2.0.0
 
       - name: download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # v3.0.0
         with:
           name: myimage
           path: /tmp
