@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 
 COPY pyproject.toml poetry.lock ./
 RUN python -m pip install poetry \
-    && poetry export -f requirements.txt --without-hashes --with-credentials > requirements.txt
+    && poetry export -f requirements.txt --without-hashes --with-credentials > requirements.txt \
+    && poetry install
 
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM gcr.io/distroless/python3:latest
@@ -26,8 +27,6 @@ COPY --from=builder /usr/src/app/requirements.txt .
 # COPY . .
 # RUN /bin/bash scripts/dns.sh \
 #     && python -m pip install -r requirements.txt
-
-RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 ADD . /app
