@@ -98,10 +98,8 @@ jobs:
         env:
           COSIGN_EXPERIMENTAL: "true"
         run: |
-          # latest
-          cosign sign ${{ steps.meta.outputs.tags[0] }}@${{ steps.build-and-push.outputs.digest }}
-          # taged
-          cosign sign ${{ steps.meta.outputs.tags[1] }}@${{ steps.build-and-push.outputs.digest }}
+          echo ${{ steps.meta.outputs.tags }}
+          cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
 
   pages:
     runs-on: ubuntu-latest
