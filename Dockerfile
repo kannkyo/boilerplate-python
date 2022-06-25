@@ -3,7 +3,7 @@ FROM python:3 as builder
 WORKDIR /usr/src/app
 
 COPY pyproject.toml poetry.lock ./
-RUN python -m pip install --no-cache-dir poetry \
+RUN python -m pip install --no-cache-dir poetry==1.1.13 \
     && poetry export -f requirements.txt --without-hashes --with-credentials > requirements.txt \
     && poetry install
 
