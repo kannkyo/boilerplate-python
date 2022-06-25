@@ -102,6 +102,8 @@ jobs:
       - uses: anchore/sbom-action@bb716408e75840bbb01e839347cd213767269d4a # v0.11.0
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
           format: spdx-json
           artifact-name: sbom.spdx.json
 
