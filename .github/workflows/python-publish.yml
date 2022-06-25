@@ -51,6 +51,7 @@ jobs:
   dockerize:
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       packages: write
       id-token: write
 
