@@ -4,8 +4,8 @@ WORKDIR /usr/src/app
 
 COPY pyproject.toml poetry.lock ./
 
-RUN python -m pip install --no-cache-dir poetry==1.1.13
-RUN poetry install
+RUN python -m pip install --no-cache-dir poetry==1.1.13 \
+    && poetry install
 
 FROM gcr.io/distroless/python3:latest
 
