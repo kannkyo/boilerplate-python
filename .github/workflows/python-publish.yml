@@ -16,6 +16,8 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     strategy:
       matrix:
         python-version: [3.8]
@@ -53,7 +55,6 @@ jobs:
   dockerize:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       packages: write
       id-token: write
 
@@ -108,6 +109,8 @@ jobs:
       matrix:
         python-version: [3.8]
         poetry-version: [1.1.11]
+    permissions:
+      pages: write
     steps:
       - uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # v3.0.0
       - uses: actions/setup-python@d09bd5e6005b175076f227b13d9730d56e9dcfcb # v4.0.0
