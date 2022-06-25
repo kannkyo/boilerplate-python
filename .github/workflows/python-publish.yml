@@ -99,6 +99,16 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
         run: cosign sign ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
 
+      - uses: anchore/sbom-action@bb716408e75840bbb01e839347cd213767269d4a # v0.11.0
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
+          format: spdx-json
+
+      - uses: anchore/sbom-action/publish-sbom@bb716408e75840bbb01e839347cd213767269d4a # v0.11.0
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          sbom-artifact-match: ".*\\.spdx$"
+
   pages:
     runs-on: ubuntu-latest
     permissions:
