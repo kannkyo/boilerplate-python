@@ -7,7 +7,7 @@ RUN python -m pip install poetry \
     && poetry export -f requirements.txt --without-hashes --with-credentials > requirements.txt
 
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3-slim
+FROM gcr.io/distroless/python3:latest
 
 EXPOSE 5000
 
