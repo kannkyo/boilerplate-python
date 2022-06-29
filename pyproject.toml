@@ -11,7 +11,7 @@ python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.6.0"
-cyclonedx-bom = "^3.4.0"
+cyclonedx-bom = "^3.5.0"
 flake8 = "^4.0.1"
 flake8-formatter-junit-xml = "^0.0.6"
 flake8-html = "^0.4.2"
