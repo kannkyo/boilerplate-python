@@ -8,6 +8,8 @@ on:
   pull_request:
   schedule:
     - cron: "50 6 * * 6"
+  push:
+    branches: [ "main" ]
 
 permissions: read-all
 
