@@ -5,6 +5,7 @@ on:
   push:
     branches: ["main"] # Scorecard support only default branch
   branch_protection_rule:
+  pull_request:
   schedule:
     - cron: "50 6 * * 6"
 
