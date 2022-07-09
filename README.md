@@ -7,6 +7,24 @@ Python プロジェクト用のボイラープレート
 [![CodeQL](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6051/badge)](https://bestpractices.coreinfrastructure.org/projects/6051)
 
+## パイプライン
+
+### 全体像
+
+* すべての Workflow に対して dispatch を定義する。
+* pull request, push をトリガーとする workflow を定義する。
+
+![](images/plantuml/summary.svg)
+
+
+### python-ci : CI
+
+![](images/plantuml/python-ci-summary.svg)
+
+### python-publish : CD
+
+![](images/plantuml/python-publish-summary.svg)
+
 ## sigstore の構成
 
 ```bash

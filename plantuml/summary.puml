@@ -1,0 +1,39 @@
+@startuml summary
+
+' !pragma useVerticalIf on
+
+start 
+
+if (pull request ?) then (yes)
+  fork
+    :python-ci;
+  fork again
+    :dependency-review;
+  fork again
+    if (actor is dependabot?) then (yes)
+      :dependabot-auto-merge;
+    else (no)
+    endif
+  fork again
+    :codeql-analysis;
+  fork again
+    :scorecards;
+  end fork
+elseif (push?) then (yes)
+  if (target is tag like "v*.*.*" ?) then (yes)
+    :python-publish;
+  elseif (target is main branch ?) then (yes)
+    fork
+      :python-ci;
+    fork again
+      :codeql-analysis;
+    fork again
+      :scorecards;
+    end fork
+  endif
+else (no)
+endif
+
+stop
+
+@enduml
