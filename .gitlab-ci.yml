@@ -2,7 +2,7 @@ image: python:3.9
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-#  RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
+  RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
 
 include:
   - template: Security/SAST.gitlab-ci.yml
