@@ -8,8 +8,7 @@ on:
   schedule:
     - cron: "0 15 * * 0"
 
-permissions:
-  contents: read
+permissions: read-all
 
 env:
   IMAGE_NAME: ${{ github.repository }}
