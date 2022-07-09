@@ -62,6 +62,8 @@ poetry run in-toto-run --key kannkyo --materials . --products . --step-name test
 * https://qiita.com/shotakaha/items/65a708f96edbe948eb79
 
 GPG キー作成方法。
+ここで、ユーザ名とメールアドレスはコミット時のものと一致し、Gitホスティングサービスに登録したものとも一致していなければならない。
+また、GitHubの場合はメールアドレスの検証は不要だが、GitLabの場合は必要である。
 
 ```bash
 # generate gpg key
