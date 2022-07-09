@@ -4,30 +4,33 @@ import toml
 import sys
 from os import path
 
+cwd = path.join(path.dirname(path.abspath(__file__)), path.pardir)
+
+
+def exe(cmd: list):
+    ret = subprocess.run(cmd, cwd=cwd)
+    logging.info(cmd)
+    logging.info(ret.stdout)
+    return ret
+
 
 def main():
     try:
         # change version
         if len(sys.argv) == 2:
             option = sys.argv[1]
-            ret = subprocess.run(["poetry", "version", option])
-            logging.info("poetry version " + option)
-            logging.info(ret.stdout)
+            ret = exe(['poetry', 'version', option])
         elif len(sys.argv) > 2:
             raise Exception('wrong argument ' + sys.argv)
 
         # get version
-        project = toml.load(
-            path.join(path.dirname(path.abspath(__file__)),
-                      path.pardir,
-                      'pyproject.toml'))
-        version = project['tool']['poetry']['version']
+        project = toml.load(path.join(cwd, 'pyproject.toml'))
+        version = 'v' + project['tool']['poetry']['version']
 
         # generate tag
-        ret = subprocess.run(["git", "tag", version])
-
-        logging.info("git tag " + version)
-        logging.info(ret.stdout)
+        ret = exe(['git', 'add', 'pyproject.toml'])
+        ret = exe(['git', 'commit', '-m', version])
+        ret = exe(['git', 'tag', version])
     except subprocess.TimeoutExpired as e:
         logging.error(ret.stderr)
         logging.error(f'timeout = {e.timeout}')
