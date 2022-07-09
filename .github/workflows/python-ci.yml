@@ -16,6 +16,11 @@ env:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    permissions: # for EnricoMi/publish-unit-test-result-action
+      checks: write
+      pull-requests: write # for comment_mode
+      contents: read # only for private repository
+      issues: read # only for private repository
     strategy:
       matrix:
         python-version: [3.8]
