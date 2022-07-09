@@ -5,11 +5,14 @@ variables:
 
 include:
   - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
 
 stages:
   - test
   - docs
   - publish
+  - scan
   - deploy
 
 cache:
@@ -93,6 +96,11 @@ dockerize:
     - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
 
+container_scanning:
+  stage: scan
+  variables:
+    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE/$CI_DEFAULT_BRANCH:$CI_COMMIT_SHA
+
 sphinx:
   stage: docs
   image: sphinxdoc/sphinx-latexpdf:latest
@@ -103,9 +111,7 @@ sphinx:
     - pip install poetry
     - poetry install
   script:
-    - poetry run sphinx-apidoc -f -o docs/api src/
-    - poetry run sphinx-build -M html docs/ public/
-    - poetry run sphinx-build -M latexpdf docs/ public/
+    - poetry run sphinx
   artifacts:
     paths:
       - public
