@@ -2,7 +2,6 @@ image: python:3.9
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
 
 include:
   - template: Security/SAST.gitlab-ci.yml
@@ -33,6 +32,8 @@ sast:
 
 pytest:
   stage: test
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   script:
     - poetry install
     - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
@@ -52,6 +53,8 @@ pytest:
 
 flake8:
   stage: test
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   script:
     - mkdir -p public/flake8
     - poetry install
@@ -73,6 +76,7 @@ publish:
     - if: '$CI_COMMIT_BRANCH == "main"'
   variables:
     REGISTRY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   script:
     - poetry install
     - poetry build
@@ -88,6 +92,8 @@ dockerize:
   stage: deploy
   needs: ["flake8", "pytest"]
   image: docker:latest
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   services:
@@ -117,6 +123,8 @@ container_scanning:
 sphinx:
   stage: deploy
   image: sphinxdoc/sphinx-latexpdf:latest
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
