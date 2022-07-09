@@ -29,7 +29,7 @@ def main():
 
         # generate tag
         ret = exe(['git', 'add', 'pyproject.toml'])
-        ret = exe(['git', 'commit', '-m', version])
+        ret = exe(['git', 'commit', '-S', '-m', version])
         ret = exe(['git', 'tag', '-s', version, '-m', version])
     except subprocess.TimeoutExpired as e:
         logging.error(ret.stderr)
