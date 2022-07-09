@@ -56,12 +56,14 @@ flake8:
     - poetry install
     - poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
     - poetry run flake8 src/ tests/ --format html --htmldir=public/flake8
+  after_script:
+    - zip -r report-flake8.zip public/flake8/
   artifacts:
     when: always
     reports:
       junit: report.xml
     paths:
-      - public/flake8/
+      - report-flake8.zip
 
 publish:
   stage: deploy
