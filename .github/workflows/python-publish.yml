@@ -28,7 +28,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          generate_release_notes: true
           draft: false
           prerelease: false
 
