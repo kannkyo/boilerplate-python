@@ -40,8 +40,8 @@ pytest:
     - poetry install
     - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
   after_script:
-    - zip -r report-htmlcov.zip public/htmlcov/
-    - zip -r report-test.zip public/test/
+    - tar -cvf report-htmlcov.tar.gz public/htmlcov/
+    - tar -cvf report-test.tar.gz public/test/
   artifacts:
     when: always
     reports:
@@ -50,8 +50,9 @@ pytest:
         coverage_format: cobertura
         path: coverage.xml
     paths:
-      - report-htmlcov.zip
-      - report-test.zip
+      # RUNNER_GENERATE_ARTIFACTS_METADATAをtrueにしてpathsにフォルダを指定するとエラー
+      - report-htmlcov.tar.gz
+      - report-test.tar.gz
 
 flake8:
   stage: test
@@ -63,13 +64,13 @@ flake8:
     - poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
     - poetry run flake8 src/ tests/ --format html --htmldir=public/flake8
   after_script:
-    - zip -r report-flake8.zip public/flake8/
+    - tar -cvf report-flake8.tar.gz public/flake8/
   artifacts:
     when: always
     reports:
       junit: report.xml
     paths:
-      - report-flake8.zip
+      - report-flake8.tar.gz
 
 publish:
   stage: deploy
