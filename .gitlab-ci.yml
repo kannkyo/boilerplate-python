@@ -24,9 +24,13 @@ default:
     - pip install poetry
     - poetry install
 
+sast:
+  stage: test
+  needs: ["pytest", "flake8"]
+
 pytest:
   stage: test
-  needs: ["flake8", "sast"]
+  needs: ["flake8"]
   script:
     - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
   artifacts:
@@ -41,7 +45,6 @@ pytest:
 
 flake8:
   stage: test
-  needs: ["sast"]
   script:
     - mkdir -p public/flake8
     - poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
@@ -52,9 +55,6 @@ flake8:
       junit: report.xml
     paths:
       - public
-
-sast:
-  stage: test
 
 publish:
   stage: deploy
