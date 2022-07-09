@@ -85,8 +85,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: dist/
-          asset_name: "*.tar.gz"
+          asset_path: dist/*.tar.gz
+          asset_name: package.tar.gz
           asset_content_type: application/zip
 
       - name: Upload package to release asset
@@ -95,8 +95,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: dist/
-          asset_name: "*.whl"
+          asset_path: dist/*.whl
+          asset_name: package.whl
           asset_content_type: application/zip
 
   dockerize:
