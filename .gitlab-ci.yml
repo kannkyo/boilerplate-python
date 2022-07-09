@@ -41,7 +41,7 @@ pytest:
         coverage_format: cobertura
         path: coverage.xml
     paths:
-      - public
+      - public/htmlcov/
 
 flake8:
   stage: test
@@ -55,7 +55,7 @@ flake8:
     reports:
       junit: report.xml
     paths:
-      - public
+      - public/flake8/
 
 publish:
   stage: deploy
@@ -115,7 +115,7 @@ sphinx:
     - poetry run sphinx
   artifacts:
     paths:
-      - public
+      - public/
 
 pages:
   stage: deploy
@@ -126,4 +126,4 @@ pages:
     - echo 'Upload all report'
   artifacts:
     paths:
-      - public
+      - public/
