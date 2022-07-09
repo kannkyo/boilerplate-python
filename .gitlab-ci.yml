@@ -29,6 +29,8 @@ default:
 
 sast:
   stage: test
+  before_script:
+    - echo do nothing
 
 pytest:
   stage: test
