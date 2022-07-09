@@ -61,7 +61,7 @@ poetry run in-toto-run --key kannkyo --materials . --products . --step-name test
 * https://dev.to/devmount/signed-git-commits-in-vs-code-36do
 * https://qiita.com/shotakaha/items/65a708f96edbe948eb79
 
-GPG キー作成。
+GPG キー作成方法。
 
 ```bash
 # generate gpg key
