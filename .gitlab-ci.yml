@@ -14,14 +14,20 @@ stages:
   - post
 
 cache:
+  key:
+    files:
+      - poetry.lock
+      - .gitlab-ci.yml
+    prefix: ${CI_JOB_NAME}
   paths:
-    - ".cache/pip"
-    - .venv/
+    - .venv
+    - .cache/pip
 
 default:
   before_script:
     - pip install --upgrade pip
     - pip install poetry
+    - poetry config virtualenvs.in-project true
 
 sast:
   stage: test
