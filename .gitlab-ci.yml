@@ -22,7 +22,6 @@ default:
   before_script:
     - pip install --upgrade pip
     - pip install poetry
-    - poetry install
 
 sast:
   stage: test
@@ -32,6 +31,7 @@ pytest:
   stage: test
   needs: ["flake8"]
   script:
+    - poetry install
     - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
   artifacts:
     when: always
@@ -47,6 +47,7 @@ flake8:
   stage: test
   script:
     - mkdir -p public/flake8
+    - poetry install
     - poetry run flake8 src/ tests/ --format junit-xml --output-file report.xml
     - poetry run flake8 src/ tests/ --format html --htmldir=public/flake8
   artifacts:
@@ -64,6 +65,7 @@ publish:
   variables:
     REGISTRY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
   script:
+    - poetry install
     - poetry build
     - echo "publish to ${REGISTRY_URL}"
     - poetry config repositories.gitlab ${REGISTRY_URL}
@@ -109,6 +111,7 @@ sphinx:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
+    - poetry install
     - poetry run sphinx
   artifacts:
     paths:
