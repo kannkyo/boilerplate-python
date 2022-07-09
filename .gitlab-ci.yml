@@ -17,8 +17,7 @@ cache:
   key:
     files:
       - poetry.lock
-      - .gitlab-ci.yml
-    prefix: ${CI_JOB_NAME}
+    prefix: ${CI_COMMIT_REF_NAME}
   paths:
     - .venv
     - .cache/pip
@@ -31,14 +30,15 @@ default:
 
 sast:
   stage: test
-  needs: ["pytest", "flake8"]
 
 pytest:
   stage: test
-  needs: ["flake8"]
   script:
     - poetry install
     - poetry run pytest --html=public/test/report.html --cov-report html:public/htmlcov/
+  after_script:
+    - zip -r report-htmlcov.zip public/htmlcov/
+    - zip -r report-test.zip public/test/
   artifacts:
     when: always
     reports:
@@ -47,7 +47,8 @@ pytest:
         coverage_format: cobertura
         path: coverage.xml
     paths:
-      - public/htmlcov/
+      - report-htmlcov.zip
+      - report-test.zip
 
 flake8:
   stage: test
