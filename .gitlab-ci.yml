@@ -133,9 +133,11 @@ sphinx:
   script:
     - poetry install
     - poetry run sphinx
+  after_script:
+    - tar -cvf public.tar.gz public/
   artifacts:
     paths:
-      - public/
+      - public.tar.gz
 
 pages:
   stage: deploy
