@@ -4,7 +4,7 @@ Python プロジェクト用のボイラープレート
 
 [![ci](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-ci.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-ci.yml)
 [![publish](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-publish.yml)
-[![CodeQL](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-codeql.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/codeql-analysis.yml)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6051/badge)](https://bestpractices.coreinfrastructure.org/projects/6051)
 
 ## パイプライン
