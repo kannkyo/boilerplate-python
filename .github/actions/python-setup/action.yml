@@ -15,12 +15,12 @@ runs:
   using: composite
   steps:
     - name: Setup python environment
-      uses: actions/setup-python@d09bd5e6005b175076f227b13d9730d56e9dcfcb # v4.0.0
+      uses: actions/setup-python@d09bd5e6005b175076f227b13d9730d56e9dcfcb
       with:
         python-version: ${{ inputs.python-version }}
 
     - name: Setup poetry environment
-      uses: snok/install-poetry@2bf112a0f6979928eb6b011f39700db589c5961e # v1.3.1
+      uses: snok/install-poetry@2bf112a0f6979928eb6b011f39700db589c5961e
       with:
         version: ${{ inputs.poetry-version }}
         virtualenvs-create: true
@@ -28,7 +28,7 @@ runs:
         installer-parallel: true
 
     - name: Cache dependencies
-      uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d # v3.0.4
+      uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
       id: poetry_cache_id
       with:
         path: .venv
