@@ -1,4 +1,4 @@
-name: Code Scan
+name: Python Code Scan
 
 on:
   workflow_dispatch:
