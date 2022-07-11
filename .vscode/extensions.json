@@ -1,10 +1,11 @@
 {
   "recommendations": [
-    // python
     "ms-python.python",
     "njpwerner.autodocstring",
-    // flask
-    "cstrap.flask-snippets"
+    "cstrap.flask-snippets",
+    "ms-azuretools.vscode-docker",
+    "exiasr.hadolint",
+    "be5invis.toml"
   ],
   "unwantedRecommendations": []
 }

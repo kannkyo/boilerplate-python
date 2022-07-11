@@ -1,20 +1,20 @@
 {
-  "python.formatting.provider": "autopep8",
-  "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled": true,
   "[python]": {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": true
   },
-  "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
+  "explorer.excludeGitIgnore": true,
+  "git-graph.repository.commits.showSignatureStatus": true,
+  "git-graph.repository.sign.commits": true,
+  "git-graph.repository.sign.tags": true,
+  "git.enableCommitSigning": true,
+  "python.formatting.provider": "autopep8",
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": false,
   "python.testing.pytestArgs": [
     "--no-cov"
   ],
-  "explorer.excludeGitIgnore": true,
-  "git.enableCommitSigning": true,
-  "git-graph.repository.sign.commits": true,
-  "git-graph.repository.sign.tags": true,
-  "git-graph.repository.commits.showSignatureStatus": true
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false
 }
