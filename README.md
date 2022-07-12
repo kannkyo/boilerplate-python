@@ -14,21 +14,46 @@ Python プロジェクト用のボイラープレート
 
 ## パイプライン
 
-### 全体像
+### 構成
 
-* すべての Workflow に対して dispatch を定義する。
-* pull request, push をトリガーとする workflow を定義する。
+本リポジトリの workflow の構成を以下に示す。
 
-![](images/plantuml/summary.svg)
+![](images/plantuml/component/workflow.svg)
 
+* 言語に依存する workflow を言語毎(docker, python)に分ける。
+* CI(ci)と CD(publish)の workflow を分ける。
+* workflow に共通する処理(setup)を action として切り出す。
+* 言語に依存しない workflow はユースケース毎(scorecards, auto-pr-review)に分ける。
 
-### python-ci : CI
+### 設計方針
 
-![](images/plantuml/python-ci-summary.svg)
+**Workflows**
 
-### python-publish : CD
+* CI/CD の Workflow に Dispatch を定義する。
+* pull request, push をトリガーとする Workflow を定義する。
 
-![](images/plantuml/python-publish-summary.svg)
+### CI
+
+* CI の Workflow を定期的に実行する(schedule)。
+* main ブランチにプッシュしたときと実行する。
+* PR を作成した場合、ターゲットブランチに依らず CI の Workflow を実行する。
+
+![](images/plantuml/workflows/python-ci-summary.svg)
+
+![](images/plantuml/workflows/docker-ci-summary.svg)
+
+### Review
+
+* 依存関係のライセンスおよびパッチ適用状況をチェックする。
+* マイナーバージョンのパッチを自動的に適用する（PR をマージする）。
+
+![](images/plantuml/workflows/auto-pr-review-summary.svg)
+
+### CD
+
+![](images/plantuml/workflows/python-publish-summary.svg)
+
+![](images/plantuml/workflows/docker-publish-summary.svg)
 
 ## sigstore の構成
 
@@ -67,8 +92,8 @@ poetry run in-toto-run --key kannkyo --materials . --products . --step-name test
 * https://qiita.com/shotakaha/items/65a708f96edbe948eb79
 
 GPG キー作成方法。
-ここで、ユーザ名とメールアドレスはコミット時のものと一致し、Gitホスティングサービスに登録したものとも一致していなければならない。
-また、GitHubの場合はメールアドレスの検証は不要だが、GitLabの場合は必要である。
+ここで、ユーザ名とメールアドレスはコミット時のものと一致し、Git ホスティングサービスに登録したものとも一致していなければならない。
+また、GitHub の場合はメールアドレスの検証は不要だが、GitLab の場合は必要である。
 
 ```bash
 # generate gpg key
