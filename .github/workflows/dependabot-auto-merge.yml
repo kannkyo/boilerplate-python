@@ -6,7 +6,7 @@ on:
 permissions: read-all
 
 jobs:
-  dependabot:
+  merge:
     runs-on: ubuntu-latest
     permissions:
       contents: write
