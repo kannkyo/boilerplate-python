@@ -1,17 +1,18 @@
-@startuml python-publish-summary
+@startuml
+
+title python-publish-summary
 
 start 
 
 if (workflow_dispatch ?) then (yes)
+elseif (push to main branch ?) then (yes)
 elseif (push to tags like "v*.*.*" ?) then (yes)
 else (no)
   stop
 endif
 
 fork
-  :deploy;
-fork again
-  :dockerize;
+  :release;
 fork again
   :pages;
 end fork
