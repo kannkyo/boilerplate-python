@@ -4,7 +4,6 @@ Python プロジェクト用のボイラープレート
 
 [![ci](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-ci.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-ci.yml)
 [![publish](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-publish.yml)
-[![CodeQL](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-codeql.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/python-codeql.yml)
 
 [![ci](https://github.com/kannkyo/boilerplate-python/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/docker-ci.yml)
 [![publish](https://github.com/kannkyo/boilerplate-python/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/kannkyo/boilerplate-python/actions/workflows/docker-publish.yml)
