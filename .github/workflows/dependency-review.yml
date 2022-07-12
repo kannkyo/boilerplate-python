@@ -6,7 +6,7 @@ on:
 permissions: read-all
 
 jobs:
-  dependency-review:
+  review:
     runs-on: ubuntu-latest
     permissions:
       contents: read
