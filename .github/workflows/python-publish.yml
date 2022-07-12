@@ -15,9 +15,11 @@ jobs:
     if: ${{ github.ref_name != 'main' }}
     permissions:
       contents: write
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      packages: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
@@ -29,25 +31,16 @@ jobs:
           draft: false
           prerelease: false
 
-  deploy:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref_name != 'main' }}
-    permissions:
-      contents: write
-      packages: write
-    needs: release
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-
       - name: Setup python environment
         uses: ./.github/actions/python-setup
 
-      - name: Generate package SBOM
-        run: poetry run sbom
-
       - name: Build package
-        run: poetry build
+        id: build
+        run: |
+          poetry run sbom
+          poetry build
+          echo "::set-output name=package_tar::`ls dist/ | grep .tar.gz`"
+          echo "::set-output name=package_whl::`ls dist/ | grep .whl`"
 
       - name: Upload package to artifact
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
@@ -55,20 +48,14 @@ jobs:
           name: package
           path: dist/
 
-      - name: Get Package name
-        id: package_name
-        run: |
-          echo "::set-output name=package_tar::`ls dist/ | grep .tar.gz`"
-          echo "::set-output name=package_whl::`ls dist/ | grep .whl`"
-
       - name: Upload package to release asset
         uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: dist/${{ steps.package_name.outputs.package_tar }}
-          asset_name: ${{ steps.package_name.outputs.package_tar }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/${{ steps.build.outputs.package_tar }}
+          asset_name: ${{ steps.build.outputs.package_tar }}
           asset_content_type: application/zip
 
       - name: Upload package to release asset
@@ -76,9 +63,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: dist/${{ steps.package_name.outputs.package_whl }}
-          asset_name: ${{ steps.package_name.outputs.package_whl }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/${{ steps.build.outputs.package_whl }}
+          asset_name: ${{ steps.build.outputs.package_whl }}
           asset_content_type: application/zip
 
   pages:
