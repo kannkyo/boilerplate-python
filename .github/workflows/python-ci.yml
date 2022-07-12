@@ -10,9 +10,6 @@ on:
 
 permissions: read-all
 
-env:
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   build:
     runs-on: ${{ matrix.os }}
