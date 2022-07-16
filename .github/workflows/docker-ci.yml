@@ -138,7 +138,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
-      - name: Scan Dockerfile by hadolint
+      - name: Scan Dockerfile by hadolint (sarif report)
         uses: hadolint/hadolint-action@f988afea3da57ee48710a9795b6bb677cc901183
         with:
           recursive: true
@@ -151,3 +151,19 @@ jobs:
         with:
           sarif_file: hadolint-results.sarif
           wait-for-processing: true
+
+
+      - name: Scan Dockerfile by hadolint (checkstyle report)
+        uses: hadolint/hadolint-action@f988afea3da57ee48710a9795b6bb677cc901183
+        if: ${{ github.event.pull_request }}
+        with:
+          recursive: true
+          format: checkstyle
+          output-file: hadolint-results.xml
+          no-fail: true
+
+      - name: Publish hadolint report to GitHub PR
+        uses: jwgmeligmeyling/checkstyle-github-action@50292990e18466f2c5d95d04ff5fab931254fa5f
+        if: ${{ github.event.pull_request }}
+        with:
+          path: ./hadolint-results.xml
