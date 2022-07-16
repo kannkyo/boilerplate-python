@@ -41,7 +41,7 @@ jobs:
 
       - name: Publish flake8 report to PR
         uses: EnricoMi/publish-unit-test-result-action@00dc83be2fe226471b499944d6f220a178421ab7 # v2
-        if: ${{ env.os == 'ubuntu-latest' }} # linux is only supported
+        if: ${{ matrix.os == 'ubuntu-latest' }} # linux is only supported
         with:
           check_name: flake8 results
           files: report.xml
@@ -58,7 +58,7 @@ jobs:
 
       - name: Publish pytest report to PR
         uses: EnricoMi/publish-unit-test-result-action@00dc83be2fe226471b499944d6f220a178421ab7 # v2
-        if: ${{ env.os == 'ubuntu-latest' }} # linux is only supported
+        if: ${{ matrix.os == 'ubuntu-latest' }} # linux is only supported
         with:
           check_name: pytest results
           files: report.xml
