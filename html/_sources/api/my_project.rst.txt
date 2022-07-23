@@ -1,0 +1,21 @@
+my\_project package
+===================
+
+Submodules
+----------
+
+my\_project.skeleton module
+---------------------------
+
+.. automodule:: my_project.skeleton
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: my_project
+   :members:
+   :undoc-members:
+   :show-inheritance:

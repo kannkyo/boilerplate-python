@@ -1,0 +1,10 @@
+boilerplate\_python package
+===========================
+
+Module contents
+---------------
+
+.. automodule:: boilerplate_python
+   :members:
+   :undoc-members:
+   :show-inheritance:

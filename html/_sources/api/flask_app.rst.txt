@@ -1,0 +1,21 @@
+flask\_app package
+==================
+
+Submodules
+----------
+
+flask\_app.hello\_world module
+------------------------------
+
+.. automodule:: flask_app.hello_world
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: flask_app
+   :members:
+   :undoc-members:
+   :show-inheritance:
