@@ -3,7 +3,6 @@ name: Docker Publish
 on:
   workflow_dispatch: # for debug
   push:
-    branches: [main]
     tags:
       - v*.*.*
 
@@ -20,15 +19,24 @@ jobs:
       contents: write
       packages: write
       id-token: write
+    needs: release
     steps:
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846
 
-      - name: Setup docker environment
-        uses: ./.github/actions/docker-setup
+      - name: Install cosign
+        uses: sigstore/cosign-installer@7e0881f8fe90b25e305bbf0309761e9314607e25
+        with:
+          cosign-release: "v1.9.0"
+
+      - name: Setup QEMU environment
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8
+
+      - name: Setup buildx environment
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6
 
       - name: Login to registry ${{ env.REGISTRY }}
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # v2
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -36,12 +44,9 @@ jobs:
 
       - name: Extract container metadata
         id: meta
-        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=semver,pattern={{version}}
-            type=edge,branch=main
 
       - name: Build and push container
         id: build-and-push
