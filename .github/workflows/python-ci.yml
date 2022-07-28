@@ -40,7 +40,7 @@ jobs:
           poetry run flake8 src/ tests/ --format html --htmldir=flake8
 
       - name: Publish flake8 report to PR
-        uses: EnricoMi/publish-unit-test-result-action@577d99537e5d139a75fa354f98417002ec2785cc
+        uses: EnricoMi/publish-unit-test-result-action@6fc8d1fcacfcd312187fcb876cc62695cfc18cfd
         if: ${{ env.os == 'ubuntu-latest' }} # linux is only supported
         with:
           check_name: flake8 results
@@ -57,7 +57,7 @@ jobs:
         run: poetry run pytest
 
       - name: Publish pytest report to PR
-        uses: EnricoMi/publish-unit-test-result-action@577d99537e5d139a75fa354f98417002ec2785cc
+        uses: EnricoMi/publish-unit-test-result-action@6fc8d1fcacfcd312187fcb876cc62695cfc18cfd
         if: ${{ env.os == 'ubuntu-latest' }} # linux is only supported
         with:
           check_name: pytest results
